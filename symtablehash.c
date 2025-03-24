@@ -5,7 +5,7 @@ enum { BUCKET_COUNT = 509 };
 typedef struct Binding Binding;
 struct Binding {
  const char *key;
- int value;
+ void *value;
  struct Binding *next;
 };
 
@@ -198,7 +198,7 @@ void SymTable_map(SymTable_T oSymTable, void (*pfApply)(const char *pcKey, void 
         p = oSymTable->buckets[i];
         while (p != NULL)
         {
-            (*pfApply)(p->key, p->value, pvExtra);
+            (*pfApply)(p->key, p->value, (void *) pvExtra);
             p = p->next;
         }
     }
