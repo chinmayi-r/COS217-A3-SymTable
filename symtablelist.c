@@ -64,7 +64,7 @@ int SymTable_put(SymTable_T oSymTable, const char *pcKey, const void *pvValue)
 void *SymTable_replace(SymTable_T oSymTable, const char *pcKey, const void *pvValue)
 {
     Node *p = oSymTable->first;
-    void *temp;
+    const void *temp;
     
     assert(oSymTable != NULL);
     assert(pcKey != NULL);
@@ -111,7 +111,7 @@ void *SymTable_get(SymTable_T oSymTable, const char *pcKey)
     for (; p != NULL; p = p->next) 
     {
         if (strcmp(p->key, pcKey) == 0) 
-            return p->value;
+            return (void *) p->value;
     }
     return NULL;
 }
@@ -120,7 +120,7 @@ void *SymTable_remove(SymTable_T oSymTable, const char *pcKey)
 {
     Node *p = oSymTable->first;
     Node *prev;
-    void *temp;
+    const void *temp;
     
     assert(oSymTable != NULL);
     assert(pcKey != NULL);
@@ -147,10 +147,10 @@ void SymTable_map(SymTable_T oSymTable, void (*pfApply)(const char *pcKey, void 
     Node *p = oSymTable->first;
     
     assert(oSymTable != NULL);
-    /*assert(pvExtra != NULL); Can It be null?? Is assert needed* - NO. See Ed https://edstem.org/us/courses/74019/discussion/6328027/
+    /*assert(pvExtra != NULL); Can It be null?? Is assert needed* - NO. See Ed https://edstem.org/us/courses/74019/discussion/6328027/ */
 
     /*assert(pfApply != NULL);Can It be null?? Is assert needed*/
 
     for ( ; p != NULL; p = p->next)
-    (*pfApply)(p->key, p->value, (void *) pvExtra); /* Am I supposed to cast here like this?*/
+    (*pfApply)(p->key, (void *) p->value, (void *) pvExtra); /* Am I supposed to cast here with (void *) like this?*/
 }
