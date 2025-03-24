@@ -5,7 +5,7 @@ enum { BUCKET_COUNT = 509 };
 typedef struct Binding Binding;
 struct Binding {
  const char *key;
- void *value;
+ const void *value;
  struct Binding *next;
 };
 

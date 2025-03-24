@@ -1,7 +1,7 @@
 #include "symtable.h"
 
 typedef struct Node Node;
-struct Node {const char *key; void *value; struct Node *next;};
+struct Node {const char *key; const void *value; struct Node *next;};
 /* What is the significance of typedef struct SymTable *SymTable_T; instead of typedef struct SymTable SymTable_T;?*/
 struct SymTable {struct Node *first; size_t len;};
 
@@ -40,7 +40,7 @@ void SymTable_free(SymTable_T oSymTable)
 size_t SymTable_getLength(SymTable_T oSymTable){assert(oSymTable != NULL); return oSymTable->len;}
 
 
-int SymTable_put(SymTable_T oSymTable, const char *pcKey, void *pvValue)
+int SymTable_put(SymTable_T oSymTable, const char *pcKey, const void *pvValue)
 {
     Node *newNode;
 
