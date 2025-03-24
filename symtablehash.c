@@ -9,7 +9,6 @@ struct Binding {
  struct Binding *next;
 };
 
-typedef struct SymTable *SymTable_T;
 struct SymTable {
  struct Binding *buckets[BUCKET_COUNT];
  size_t size;
@@ -51,7 +50,7 @@ SymTable_T SymTable_new()
 void SymTable_free(SymTable_T oSymTable)
 {
     Binding *p;
-    int i;
+    size_t i;
     
     assert(oSymTable != NULL);
 
@@ -96,7 +95,7 @@ void *SymTable_replace(SymTable_T oSymTable, const char *pcKey, const void *pvVa
 {
     size_t hash_value = SymTable_hash(pcKey, oSymTable->size);
     Binding *p = oSymTable->buckets[hash_value];
-    void *temp;
+    const void *temp;
 
     assert(oSymTable != NULL);
     assert(pcKey != NULL);
@@ -109,7 +108,7 @@ void *SymTable_replace(SymTable_T oSymTable, const char *pcKey, const void *pvVa
         if (strcmp(p->key, pcKey) == 0){
             temp = p->value;
             p->value = pvValue;
-            return temp;
+            return (void *) temp;
         }
         p = p->next;
     }
@@ -148,7 +147,7 @@ void *SymTable_get(SymTable_T oSymTable, const char *pcKey)
     while(p != NULL)
     {
         if (strcmp(p->key, pcKey) == 0)
-            return p->value;
+            return (void *) p->value;
         p = p->next;
     }
     return NULL;
@@ -159,7 +158,7 @@ void *SymTable_remove(SymTable_T oSymTable, const char *pcKey)
     size_t hash_value = SymTable_hash(pcKey, oSymTable->size);
     Binding *p = oSymTable->buckets[hash_value];
     Binding *prev;
-    void *temp;
+    const void *temp;
 
     assert(oSymTable != NULL);
     assert(pcKey != NULL);
@@ -175,7 +174,7 @@ void *SymTable_remove(SymTable_T oSymTable, const char *pcKey)
             --(oSymTable->len);
             temp = p->value;
             Binding_free(p);
-            return temp;
+            return (void *) temp;
         }
         prev = p;
         p = p->next;
@@ -186,10 +185,10 @@ void *SymTable_remove(SymTable_T oSymTable, const char *pcKey)
 void SymTable_map(SymTable_T oSymTable, void (*pfApply)(const char *pcKey, void *pvValue, void *pvExtra), const void *pvExtra)
 {
     Binding *p;
-    int i;
+    size_t i;
 
     assert(oSymTable != NULL);
-    /*assert(pvExtra != NULL); Can It be null?? Is assert needed* - NO. See Ed https://edstem.org/us/courses/74019/discussion/6328027/
+    /*assert(pvExtra != NULL); Can It be null?? Is assert needed* - NO. See Ed https://edstem.org/us/courses/74019/discussion/6328027/ */
 
     /*assert(pfApply != NULL);Can It be null?? Is assert needed*/
 
@@ -198,7 +197,7 @@ void SymTable_map(SymTable_T oSymTable, void (*pfApply)(const char *pcKey, void 
         p = oSymTable->buckets[i];
         while (p != NULL)
         {
-            (*pfApply)(p->key, p->value, (void *) pvExtra);
+            (*pfApply)(p->key, (void *) p->value, (void *) pvExtra);
             p = p->next;
         }
     }
