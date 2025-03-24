@@ -77,7 +77,7 @@ void *SymTable_replace(SymTable_T oSymTable, const char *pcKey, const void *pvVa
         if (strcmp(p->key, pcKey) == 0) {
             temp = p->value;
             p->value = pvValue;
-            return temp;}
+            return (void *) temp;}
     }
     return NULL;
 }
@@ -135,7 +135,7 @@ void *SymTable_remove(SymTable_T oSymTable, const char *pcKey)
             --(oSymTable->len);
             temp = p->value;
             Node_free(p);
-            return temp;
+            return (void *) temp;
         }
         prev = p;
     }
