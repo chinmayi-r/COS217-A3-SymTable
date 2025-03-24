@@ -3,7 +3,6 @@
 typedef struct Node Node;
 struct Node {const char *key; void *value; struct Node *next;};
 /* What is the significance of typedef struct SymTable *SymTable_T; instead of typedef struct SymTable SymTable_T;?*/
-typedef struct SymTable *SymTable_T;
 struct SymTable {struct Node *first; size_t len;};
 
 static void Node_free(Node *p){
@@ -18,7 +17,7 @@ SymTable_T SymTable_new()
 {
  struct SymTable *p; /* So can I replace this with SymTable_T p;? or is it SymTable_T *p;? */
  p = calloc(1, sizeof(*p));
- if(p == NULL) {cry(); return NULL;}
+ if(p == NULL) { printf("Mem alloc Error"); return NULL;}
  p->len = 0;
  return p;
 }
@@ -52,7 +51,7 @@ int SymTable_put(SymTable_T oSymTable, const char *pcKey, const void *pvValue)
     if(SymTable_contains(oSymTable, pcKey)){return 0;}
 
     newNode = (Node *) calloc(1, sizeof(Node));
-    if(newNode == NULL) {cry(); return 0;}
+    if(newNode == NULL) {printf("Mem alloc Error"); return 0;}
     newNode->key = (const char*)malloc(strlen(pcKey) + 1);
     strcpy((char*)newNode->key, pcKey);
     newNode->value = pvValue;

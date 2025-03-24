@@ -41,7 +41,7 @@ SymTable_T SymTable_new()
 {
  struct SymTable *p; /* So can I replace this with SymTable_T p;? or is it SymTable_T *p;? */
  p = calloc(1, sizeof(*p));
- if(p == NULL) {cry(); return NULL;}
+ if(p == NULL) {printf("Mem alloc Error"); return NULL;}
  p->size = BUCKET_COUNT;
  p->len = 0;
  return p;
@@ -82,7 +82,7 @@ int SymTable_put(SymTable_T oSymTable, const char *pcKey, const void *pvValue)
     if(SymTable_contains(oSymTable, pcKey)){return 0;}
     
     newBinding = (Binding *) calloc(1, sizeof(Binding));
-    if(newBinding == NULL) {cry(); return 0;}
+    if(newBinding == NULL) {printf("Mem alloc Error"); return 0;}
     newBinding->key = (const char*)malloc(strlen(pcKey) + 1);
     strcpy((char*)newBinding->key, pcKey);
     newBinding->value = pvValue;
