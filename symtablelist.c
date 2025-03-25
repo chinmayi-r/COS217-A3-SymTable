@@ -30,7 +30,7 @@ struct SymTable {
     size_t len;         
 };
 
-/* Free the memory associated with the Node structure p, including
+/* Free the memory associated with the Node pointer pBinding, including
    its key but not the value it points to. */
 static void Node_free(Node_T *pBinding){ /* function name Node_free does not match module name symtablelist.c. Should I replace? */
     assert(pBinding != NULL);

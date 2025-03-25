@@ -56,7 +56,7 @@ static size_t SymTable_hash(const char *pcKey, size_t uBucketCount)
    return uHash % uBucketCount;
 }
 
-/* Free the memory associated with the Binding_T structure pBinding, including
+/* Free the memory associated with the Binding_T pointer pBinding, including
    its key but not the value it points to. */
 static void Binding_free(Binding_T *pBinding){
     assert(pBinding != NULL);
