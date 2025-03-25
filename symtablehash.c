@@ -91,7 +91,7 @@ static void SymTable_resize(SymTable_T oSymTable, size_t size)
     size_t old_size = oSymTable->size;
     old_buckets = oSymTable->buckets;
     new_buckets = (struct Binding **) calloc(size, sizeof(*new_buckets));
-    if(new_buckets == NULL) {printf("Mem alloc Error"); return;}
+    if(new_buckets == NULL) {printf("Mem alloc Error"); assert(0); return;}
 
     oSymTable->buckets = new_buckets;
     oSymTable->size = size;
@@ -137,7 +137,7 @@ int SymTable_put(SymTable_T oSymTable, const char *pcKey, const void *pvValue)
     if ((oSymTable->len >= oSymTable->size) && oSymTable->size != BUCKET_COUNT[7])
     {
         SymTable_resize(oSymTable, BUCKET_COUNT[findIndex(BUCKET_COUNT, 8, oSymTable->size)+1]);
-        assert(0);
+        /*assert(0);*/
         printf("resized to");
         printf((char *)oSymTable->size);
     }
