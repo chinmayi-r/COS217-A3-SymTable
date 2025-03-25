@@ -61,7 +61,6 @@ static size_t SymTable_hash(const char *pcKey, size_t uBucketCount)
 static void SymTable_binding_free(Binding_T *pBinding){
     assert(pBinding != NULL);
     free((char *)pBinding->key);
-    /*free(p->value);*/
     free(pBinding);
 }
 
@@ -116,7 +115,7 @@ static size_t SymTable_BUCKETLIST_findIndex(const size_t arr[], size_t size, siz
    as its bucket count. */
 SymTable_T SymTable_new(void)
 {
- struct SymTable *pSymtable; /* So can I replace this with SymTable_T p;? or is it SymTable_T *p;? */
+ struct SymTable *pSymtable; 
  struct Binding **qBinding;
  pSymtable = (struct SymTable *) calloc(1, sizeof(*pSymtable));
  if(pSymtable == NULL) {printf("Mem alloc Error"); return NULL;}
@@ -148,7 +147,7 @@ void SymTable_free(SymTable_T oSymTable)
             pBinding = next;
         }
     }
-    free(oSymTable->buckets); /* Is this needed?*/
+    free(oSymTable->buckets); 
     free(oSymTable);
 }
 
@@ -274,7 +273,7 @@ void *SymTable_remove(SymTable_T oSymTable, const char *pcKey)
     prev = NULL;
     while(pBinding != NULL)
     {
-        if (strcmp(pBinding->key, pcKey) == 0) { /* Diff from above!!!!! Note differences!!!*/
+        if (strcmp(pBinding->key, pcKey) == 0) { 
             if (prev == NULL) {oSymTable->buckets[hash_value] = pBinding->next;}
             else {prev->next = pBinding->next;}
             --(oSymTable->len);
@@ -298,7 +297,7 @@ void SymTable_map(SymTable_T oSymTable, void (*pfApply)(const char *pcKey, void 
     assert(oSymTable != NULL);
     /*assert(pvExtra != NULL); Can It be null?? Is assert needed* - NO. See Ed https://edstem.org/us/courses/74019/discussion/6328027/ */
 
-    assert(pfApply != NULL); /*Can It be null?? Is assert needed*/
+    assert(pfApply != NULL); 
 
     for (i=0; i < oSymTable->size; i++)
     {

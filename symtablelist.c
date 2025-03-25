@@ -45,7 +45,7 @@ static void SymTable_node_free(Node_T *pBinding){ /* function name Node_free doe
    as its bucket count. */
 SymTable_T SymTable_new(void)
 {
- struct SymTable *pSymtable; /* So can I replace this with SymTable_T p;? or is it SymTable_T *p;? */
+ struct SymTable *pSymtable; 
  pSymtable = calloc(1, sizeof(*pSymtable));
  if(pSymtable == NULL) { printf("Mem alloc Error"); return NULL;}
  pSymtable->len = 0;
@@ -65,7 +65,6 @@ void SymTable_free(SymTable_T oSymTable)
         next = pBinding->next;
         SymTable_node_free(pBinding);
     }
-    /* free(oSymTable->first);  Is this needed? Is double freeing happening?*/
     free(oSymTable);
 }
 
@@ -81,7 +80,6 @@ int SymTable_put(SymTable_T oSymTable, const char *pcKey, const void *pvValue)
 
     assert(oSymTable != NULL);
     assert(pcKey != NULL);
-    /*assert(pvValue != NULL);*/
 
     if(SymTable_contains(oSymTable, pcKey)){return 0;}
 
