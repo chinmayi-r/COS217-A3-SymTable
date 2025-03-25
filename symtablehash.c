@@ -112,7 +112,7 @@ static void SymTable_resize(SymTable_T oSymTable, size_t size)
 }
 
 int findIndex(size_t arr[], size_t size, size_t value) {
-    int i;
+    size_t i;
     for (i = 0; i < size; i++) {
         if (arr[i] == value) {
             return i;
