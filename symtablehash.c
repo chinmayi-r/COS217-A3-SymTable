@@ -50,6 +50,7 @@ SymTable_T SymTable_new()
 void SymTable_free(SymTable_T oSymTable)
 {
     Binding *p;
+    Binding *next;
     size_t i;
     
     assert(oSymTable != NULL);
@@ -59,8 +60,9 @@ void SymTable_free(SymTable_T oSymTable)
         p = oSymTable->buckets[i];
         while (p != NULL)
         {
-            p = p->next;
+            next = p->next;
             Binding_free(p);
+            p = next;
         }
     }
     free(oSymTable->buckets); /* Is this needed?*/
