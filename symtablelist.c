@@ -9,6 +9,7 @@
    - key: a unique string identifier for the binding.
    - value: a pointer to the associated data.
    - next: a pointer to the next binding in a linked list. */
+typedef struct Node Node_T;
 struct Node {
     /* Unique string identifier */
     const char *key;   
@@ -17,7 +18,6 @@ struct Node {
     /* Pointer to next node in the list */
     struct Node *next; 
 };
-typedef struct Node Node_T;
 
 /* A SymTable_T object represents a symbol table implemented as a linked list.
    It contains:
