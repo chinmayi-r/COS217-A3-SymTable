@@ -44,7 +44,7 @@ SymTable_T SymTable_new()
  if(p == NULL) {printf("Mem alloc Error"); return NULL;}
  p->size = BUCKET_COUNT;
  p->len = 0;
- q = (struct Binding **) calloc(BUCKET_COUNT, sizeof(struct Binding *));
+ q = (struct Binding **) calloc(BUCKET_COUNT, sizeof(*q));
  if(q == NULL) {printf("Mem alloc Error"); return NULL;}
  p->buckets = q;
  return p;
