@@ -90,7 +90,7 @@ static void SymTable_resize(SymTable_T oSymTable, size_t size)
 
     size_t old_size = oSymTable->size;
     old_buckets = oSymTable->buckets;
-    assert(0);
+    /*assert(0);*/
     new_buckets = calloc(size, sizeof(*new_buckets));
     if(new_buckets == NULL) {printf("Mem alloc Error"); assert(0); return;}
 
