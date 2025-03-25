@@ -10,7 +10,7 @@ struct Binding {
 };
 
 struct SymTable {
- struct Binding *buckets[BUCKET_COUNT];
+ struct Binding **buckets;
  size_t size;
  size_t len;
 };
@@ -44,7 +44,7 @@ SymTable_T SymTable_new()
  if(p == NULL) {printf("Mem alloc Error"); return NULL;}
  p->size = BUCKET_COUNT;
  p->len = 0;
- q = (Binding **) calloc(BUCKET_COUNT, sizeof(Binding *));
+ q = (struct Binding **) calloc(BUCKET_COUNT, sizeof(struct Binding *));
  if(q == NULL) {printf("Mem alloc Error"); return NULL;}
  p->buckets = q;
  return p;
