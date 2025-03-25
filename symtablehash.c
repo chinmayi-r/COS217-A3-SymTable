@@ -131,18 +131,18 @@ int SymTable_put(SymTable_T oSymTable, const char *pcKey, const void *pvValue)
     /*assert(pvValue != NULL);*/
 
     if(SymTable_contains(oSymTable, pcKey)){return 0;}
-    assert(0);
+    
 
     /* NOTE that >= does not mean no of elements >= BUCKETCOUNT!!! 
     Since ++(oSymTable->len); is happening later, the no of elements is actually (oSymTable->len+1) !*/
     if ((oSymTable->len >= oSymTable->size) && oSymTable->size != BUCKET_COUNT[7])
     {
         SymTable_resize(oSymTable, BUCKET_COUNT[findIndex(BUCKET_COUNT, 8, oSymTable->size)+1]);
-        assert(0);
+        
         printf("resized to");
         printf((char *)oSymTable->size);
     }
-    assert(0);
+    
     printf("asa");
     hash_value = SymTable_hash(pcKey, oSymTable->size);
     newBinding = (Binding_T *) calloc(1, sizeof(Binding_T));
