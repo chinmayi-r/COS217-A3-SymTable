@@ -98,7 +98,7 @@ static void SymTable_resize(SymTable_T oSymTable, size_t size)
     oSymTable->len = 0; /* Since SymTable_put increments len when reinserting bindings*/
 
 	for (i = 0; i < old_size; i++) {
-        Binding_T *buckets_i = old_buckets[i];
+        *buckets_i = old_buckets[i];
         while (buckets_i != NULL)
         {
             next = buckets_i->next;
