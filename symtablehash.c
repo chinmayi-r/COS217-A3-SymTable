@@ -137,6 +137,7 @@ int SymTable_put(SymTable_T oSymTable, const char *pcKey, const void *pvValue)
     if ((oSymTable->len >= oSymTable->size) && oSymTable->size != BUCKET_COUNT[7])
     {
         SymTable_resize(oSymTable, BUCKET_COUNT[findIndex(BUCKET_COUNT, 8, oSymTable->size)+1]);
+        assert(0);
         printf("resized to");
         printf((char *)oSymTable->size);
     }
