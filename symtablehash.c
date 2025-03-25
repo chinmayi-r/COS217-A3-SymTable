@@ -131,6 +131,7 @@ int SymTable_put(SymTable_T oSymTable, const char *pcKey, const void *pvValue)
     /*assert(pvValue != NULL);*/
 
     if(SymTable_contains(oSymTable, pcKey)){return 0;}
+    assert(0);
 
     /* NOTE that >= does not mean no of elements >= BUCKETCOUNT!!! 
     Since ++(oSymTable->len); is happening later, the no of elements is actually (oSymTable->len+1) !*/
