@@ -77,7 +77,7 @@ static void SymTable_resize(SymTable_T oSymTable, size_t size)
 
     size_t old_size = oSymTable->size;
     old_buckets = oSymTable->buckets;
-    new_buckets = calloc(size, sizeof(*new_buckets));
+    new_buckets = (Binding_T **) (size, sizeof(*new_buckets));
     if(new_buckets == NULL) {printf("Mem alloc Error"); return;}
 
     oSymTable->buckets = new_buckets;
@@ -298,7 +298,7 @@ void SymTable_map(SymTable_T oSymTable, void (*pfApply)(const char *pcKey, void 
     assert(oSymTable != NULL);
     /*assert(pvExtra != NULL); Can It be null?? Is assert needed* - NO. See Ed https://edstem.org/us/courses/74019/discussion/6328027/ */
 
-    /*assert(pfApply != NULL);Can It be null?? Is assert needed*/
+    assert(pfApply != NULL); /*Can It be null?? Is assert needed*/
 
     for (i=0; i < oSymTable->size; i++)
     {

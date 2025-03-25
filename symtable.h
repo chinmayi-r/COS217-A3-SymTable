@@ -21,7 +21,7 @@ struct SymTable;
 /* Create a new symbol table and return a pointer to it. 
    The table is initially empty and uses the first entry of BUCKET_COUNT 
    as its bucket count. */
-   SymTable_T SymTable_new();
+   SymTable_T SymTable_new(void);
    
    /* Return the number of key-value bindings stored in the symbol table oSymTable. */
    size_t SymTable_getLength(SymTable_T oSymTable);
