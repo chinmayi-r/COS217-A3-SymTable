@@ -32,7 +32,7 @@ struct SymTable {
 
 /* Free the memory associated with the Node pointer pBinding, including
    its key but not the value it points to. */
-static void Node_free(Node_T *pBinding){ /* function name Node_free does not match module name symtablelist.c. Should I replace? */
+static void SymTable_node_free(Node_T *pBinding){ /* function name Node_free does not match module name symtablelist.c. Should I replace? */
     assert(pBinding != NULL);
     free((char *)pBinding->key);
     free(pBinding);
@@ -63,7 +63,7 @@ void SymTable_free(SymTable_T oSymTable)
 
     for ( ; pBinding != NULL; pBinding = next) {
         next = pBinding->next;
-        Node_free(pBinding);
+        SymTable_node_free(pBinding);
     }
     /* free(oSymTable->first);  Is this needed? Is double freeing happening?*/
     free(oSymTable);
@@ -177,7 +177,7 @@ void *SymTable_remove(SymTable_T oSymTable, const char *pcKey)
             else {prev->next = pBinding->next;}
             --(oSymTable->len);
             temp = pBinding->value;
-            Node_free(pBinding);
+            SymTable_node_free(pBinding);
             return (void *) temp;
         }
         prev = pBinding;

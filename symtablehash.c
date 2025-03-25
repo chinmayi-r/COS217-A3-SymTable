@@ -58,7 +58,7 @@ static size_t SymTable_hash(const char *pcKey, size_t uBucketCount)
 
 /* Free the memory associated with the Binding_T pointer pBinding, including
    its key but not the value it points to. */
-static void Binding_free(Binding_T *pBinding){
+static void SymTable_binding_free(Binding_T *pBinding){
     assert(pBinding != NULL);
     free((char *)pBinding->key);
     /*free(p->value);*/
@@ -90,7 +90,7 @@ static void SymTable_resize(SymTable_T oSymTable, size_t size)
         {
             next = buckets_i->next;
             SymTable_put(oSymTable, buckets_i->key, buckets_i->value);
-            Binding_free(buckets_i);
+            SymTable_binding_free(buckets_i);
             buckets_i = next;
         }
 	}
@@ -100,7 +100,7 @@ static void SymTable_resize(SymTable_T oSymTable, size_t size)
 
 /* Search for value in the array arr of given size. 
    Return the index if value is found, otherwise return -1. */
-static int BUCKETLIST_findIndex(const size_t arr[], size_t size, size_t value) {
+static int SymTable_BUCKETLIST_findIndex(const size_t arr[], size_t size, size_t value) {
     size_t i;
     assert(arr != NULL);
     for (i = 0; i < size; i++) {
@@ -144,7 +144,7 @@ void SymTable_free(SymTable_T oSymTable)
         while (pBinding != NULL)
         {
             next = pBinding->next;
-            Binding_free(pBinding);
+            SymTable_binding_free(pBinding);
             pBinding = next;
         }
     }
@@ -174,7 +174,7 @@ int SymTable_put(SymTable_T oSymTable, const char *pcKey, const void *pvValue)
     Since ++(oSymTable->len); is happening later, the no of elements is actually (oSymTable->len+1) !*/
     if ((oSymTable->len >= oSymTable->size) && oSymTable->size != BUCKET_COUNT[BUCKET_COUNT_len-1])
     {
-        SymTable_resize(oSymTable, BUCKET_COUNT[BUCKETLIST_findIndex(BUCKET_COUNT, BUCKET_COUNT_len, oSymTable->size)+1]);
+        SymTable_resize(oSymTable, BUCKET_COUNT[SymTable_BUCKETLIST_findIndex(BUCKET_COUNT, BUCKET_COUNT_len, oSymTable->size)+1]);
     }
     
     hash_value = SymTable_hash(pcKey, oSymTable->size);
@@ -279,7 +279,7 @@ void *SymTable_remove(SymTable_T oSymTable, const char *pcKey)
             else {prev->next = pBinding->next;}
             --(oSymTable->len);
             temp = pBinding->value;
-            Binding_free(pBinding);
+            SymTable_binding_free(pBinding);
             return (void *) temp;
         }
         prev = pBinding;
