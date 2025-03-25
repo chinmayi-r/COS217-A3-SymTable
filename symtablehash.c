@@ -82,6 +82,7 @@ static void SymTable_resize(SymTable_T oSymTable, size_t size)
     Binding_T **new_buckets;
     Binding_T *buckets_i;
     Binding_T *next; 
+    size_t i;
     /*if (oSymTable->size > size) {
 		printf("SymTable_resize(): requested size too small");
 		return NULL;
@@ -96,7 +97,7 @@ static void SymTable_resize(SymTable_T oSymTable, size_t size)
     oSymTable->size = size;
     oSymTable->len = 0; /* Since SymTable_put increments len when reinserting bindings*/
 
-	for (size_t i = 0; i < old_size; i++) {
+	for (i = 0; i < old_size; i++) {
         Binding_T *buckets_i = old_buckets[i];
         while (buckets_i != NULL)
         {
@@ -110,8 +111,9 @@ static void SymTable_resize(SymTable_T oSymTable, size_t size)
     return;
 }
 
-int findIndex(int arr[], int size, int value) {
-    for (int i = 0; i < size; i++) {
+int findIndex(size_t arr[], size_t size, size_t value) {
+    int i;
+    for (i = 0; i < size; i++) {
         if (arr[i] == value) {
             return i;
         }
