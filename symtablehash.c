@@ -77,7 +77,7 @@ static void SymTable_resize(SymTable_T oSymTable, size_t size)
     size_t old_size = oSymTable->size;
     old_buckets = oSymTable->buckets;
     new_buckets = (Binding_T **) calloc(size, sizeof(*new_buckets));
-    if(new_buckets == NULL) {printf("Mem alloc Error"); return;}
+    if(new_buckets == NULL) {return;}
 
     oSymTable->buckets = new_buckets;
     oSymTable->size = size;
@@ -118,9 +118,9 @@ SymTable_T SymTable_new(void)
  struct SymTable *pSymtable; 
  struct Binding **qBinding;
  pSymtable = (struct SymTable *) calloc(1, sizeof(*pSymtable));
- if(pSymtable == NULL) {printf("Mem alloc Error"); return NULL;}
+ if(pSymtable == NULL) {return NULL;}
  qBinding = (struct Binding **) calloc(BUCKET_COUNT[0], sizeof(*qBinding));
- if(qBinding == NULL) {printf("Mem alloc Error"); return NULL;}
+ if(qBinding == NULL) {return NULL;}
  pSymtable->buckets = qBinding;
  pSymtable->size = BUCKET_COUNT[0];
  pSymtable->len = 0;
@@ -178,7 +178,7 @@ int SymTable_put(SymTable_T oSymTable, const char *pcKey, const void *pvValue)
     
     hash_value = SymTable_hash(pcKey, oSymTable->size);
     newBinding = (Binding_T *) calloc(1, sizeof(Binding_T));
-    if(newBinding == NULL) {printf("Mem alloc Error"); return 0;}
+    if(newBinding == NULL) {return 0;}
     newBinding->key = (const char*)malloc(strlen(pcKey) + 1);
     strcpy((char*)newBinding->key, pcKey);
     newBinding->value = pvValue;

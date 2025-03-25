@@ -47,7 +47,7 @@ SymTable_T SymTable_new(void)
 {
  struct SymTable *pSymtable; 
  pSymtable = calloc(1, sizeof(*pSymtable));
- if(pSymtable == NULL) { printf("Mem alloc Error"); return NULL;}
+ if(pSymtable == NULL) {return NULL;}
  pSymtable->len = 0;
  return pSymtable;
 }
@@ -84,7 +84,7 @@ int SymTable_put(SymTable_T oSymTable, const char *pcKey, const void *pvValue)
     if(SymTable_contains(oSymTable, pcKey)){return 0;}
 
     newNode = (Node_T *) calloc(1, sizeof(Node_T));
-    if(newNode == NULL) {printf("Mem alloc Error"); return 0;}
+    if(newNode == NULL) {return 0;}
     newNode->key = (const char*)malloc(strlen(pcKey) + 1);
     strcpy((char*)newNode->key, pcKey);
     newNode->value = pvValue;
