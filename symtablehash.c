@@ -83,7 +83,7 @@ static void SymTable_resize(SymTable_T oSymTable, size_t size)
 
 /* Search for value in the array arr of given size. 
    Return the index if value is found, otherwise return -1. */
-static int BUCKETLIST_findIndex(size_t arr[], size_t size, size_t value) {
+static int BUCKETLIST_findIndex(const size_t arr[], size_t size, size_t value) {
     size_t i;
     for (i = 0; i < size; i++) {
         if (arr[i] == value) {
