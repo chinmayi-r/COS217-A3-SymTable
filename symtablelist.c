@@ -5,8 +5,8 @@
 #include "symtable.h"
 
 /* A Node_T object represents a single key-value binding within a symbol table.
-   Each node contains a unique string key, an associated value pointer, 
-   and a pointer to the next binding in a linked list. */
+   Each node contains a unique string key, an associated value pointer *value, 
+   and a pointer *next to the next binding in a linked list. */
 struct Node {const char *key; const void *value; struct Node *next;};
 typedef struct Node Node_T;
 
