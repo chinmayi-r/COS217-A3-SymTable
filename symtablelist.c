@@ -5,14 +5,30 @@
 #include "symtable.h"
 
 /* A Node_T object represents a single key-value binding within a symbol table.
-   Each node contains a unique string key, an associated value pointer *value, 
-   and a pointer *next to the next binding in a linked list. */
-struct Node {const char *key; const void *value; struct Node *next;};
+   Each node contains:
+   - key: a unique string identifier for the binding.
+   - value: a pointer to the associated data.
+   - next: a pointer to the next binding in a linked list. */
+struct Node {
+    /* Unique string identifier */
+    const char *key;   
+    /* Pointer to associated data */
+    const void *value; 
+    /* Pointer to next node in the list */
+    struct Node *next; 
+};
 typedef struct Node Node_T;
 
-/* What is the significance of typedef struct SymTable *SymTable_T; instead of typedef struct SymTable SymTable_T;?*/
-
-struct SymTable {struct Node *first; size_t len;};
+/* A SymTable_T object represents a symbol table implemented as a linked list.
+   It contains:
+   - first: a pointer to the first node in the list.
+   - len: the number of key-value bindings stored in the table. */
+struct SymTable {
+    /* Pointer to first node in linked list */
+    struct Node *first; 
+    /* Number of key-value bindings */
+    size_t len;         
+};
 
 /* Free the memory associated with the Node structure p, including
    its key but not the value it points to. */
