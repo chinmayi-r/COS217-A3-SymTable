@@ -2,7 +2,7 @@
 
 enum { BUCKET_COUNT = 509 };
 
-typedef struct Binding Binding;
+typedef struct Binding Binding_T;
 struct Binding {
  const char *key;
  const void *value;
@@ -29,7 +29,7 @@ static size_t SymTable_hash(const char *pcKey, size_t uBucketCount)
    return uHash % uBucketCount;
 }
 
-static void Binding_free(Binding *p){
+static void Binding_free(Binding_T *p){
     assert(p != NULL);
     free((char *)p->key);
     /*free(p->value);*/
@@ -40,21 +40,21 @@ SymTable_T SymTable_new()
 {
  struct SymTable *p; /* So can I replace this with SymTable_T p;? or is it SymTable_T *p;? */
  struct Binding **q;
- p = calloc(1, sizeof(*p));
+ p = (struct SymTable *) calloc(1, sizeof(*p));
  if(p == NULL) {printf("Mem alloc Error"); return NULL;}
- p->size = BUCKET_COUNT;
- p->len = 0;
  q = (struct Binding **) calloc(BUCKET_COUNT, sizeof(*q));
  if(q == NULL) {printf("Mem alloc Error"); return NULL;}
  p->buckets = q;
+ p->size = BUCKET_COUNT;
+ p->len = 0;
  return p;
 }
 
 
 void SymTable_free(SymTable_T oSymTable)
 {
-    Binding *p;
-    Binding *next;
+    Binding_T *p;
+    Binding_T *next;
     size_t i;
     
     assert(oSymTable != NULL);
@@ -78,7 +78,7 @@ size_t SymTable_getLength(SymTable_T oSymTable){assert(oSymTable != NULL); retur
 int SymTable_put(SymTable_T oSymTable, const char *pcKey, const void *pvValue)
 {
     size_t hash_value = SymTable_hash(pcKey, oSymTable->size);
-    Binding *newBinding;
+    Binding_T *newBinding;
 
     assert(oSymTable != NULL);
     assert(pcKey != NULL);
@@ -86,7 +86,7 @@ int SymTable_put(SymTable_T oSymTable, const char *pcKey, const void *pvValue)
 
     if(SymTable_contains(oSymTable, pcKey)){return 0;}
     
-    newBinding = (Binding *) calloc(1, sizeof(Binding));
+    newBinding = (Binding_T *) calloc(1, sizeof(Binding_T));
     if(newBinding == NULL) {printf("Mem alloc Error"); return 0;}
     newBinding->key = (const char*)malloc(strlen(pcKey) + 1);
     strcpy((char*)newBinding->key, pcKey);
@@ -100,7 +100,7 @@ int SymTable_put(SymTable_T oSymTable, const char *pcKey, const void *pvValue)
 void *SymTable_replace(SymTable_T oSymTable, const char *pcKey, const void *pvValue)
 {
     size_t hash_value = SymTable_hash(pcKey, oSymTable->size);
-    Binding *p = oSymTable->buckets[hash_value];
+    Binding_T *p = oSymTable->buckets[hash_value];
     const void *temp;
 
     assert(oSymTable != NULL);
@@ -124,7 +124,7 @@ void *SymTable_replace(SymTable_T oSymTable, const char *pcKey, const void *pvVa
 int SymTable_contains(SymTable_T oSymTable, const char *pcKey)
 {
     size_t hash_value = SymTable_hash(pcKey, oSymTable->size);
-    Binding *p = oSymTable->buckets[hash_value];
+    Binding_T *p = oSymTable->buckets[hash_value];
 
     assert(oSymTable != NULL);
     assert(pcKey != NULL);
@@ -143,7 +143,7 @@ int SymTable_contains(SymTable_T oSymTable, const char *pcKey)
 void *SymTable_get(SymTable_T oSymTable, const char *pcKey)
 {
     size_t hash_value = SymTable_hash(pcKey, oSymTable->size);
-    Binding *p = oSymTable->buckets[hash_value];
+    Binding_T *p = oSymTable->buckets[hash_value];
 
     assert(oSymTable != NULL);
     assert(pcKey != NULL);
@@ -162,8 +162,8 @@ void *SymTable_get(SymTable_T oSymTable, const char *pcKey)
 void *SymTable_remove(SymTable_T oSymTable, const char *pcKey)
 {
     size_t hash_value = SymTable_hash(pcKey, oSymTable->size);
-    Binding *p = oSymTable->buckets[hash_value];
-    Binding *prev;
+    Binding_T *p = oSymTable->buckets[hash_value];
+    Binding_T *prev;
     const void *temp;
 
     assert(oSymTable != NULL);
@@ -190,7 +190,7 @@ void *SymTable_remove(SymTable_T oSymTable, const char *pcKey)
 
 void SymTable_map(SymTable_T oSymTable, void (*pfApply)(const char *pcKey, void *pvValue, void *pvExtra), const void *pvExtra)
 {
-    Binding *p;
+    Binding_T *p;
     size_t i;
 
     assert(oSymTable != NULL);
