@@ -100,7 +100,7 @@ static void SymTable_resize(SymTable_T oSymTable, size_t size)
 
 /* Search for value in the array arr of given size. 
    Return the index if value is found, otherwise return -1. */
-static int SymTable_BUCKETLIST_findIndex(const size_t arr[], size_t size, size_t value) {
+static size_t SymTable_BUCKETLIST_findIndex(const size_t arr[], size_t size, size_t value) {
     size_t i;
     assert(arr != NULL);
     for (i = 0; i < size; i++) {
@@ -114,7 +114,7 @@ static int SymTable_BUCKETLIST_findIndex(const size_t arr[], size_t size, size_t
 /* Create a new symbol table and return a pointer to it. 
    The table is initially empty and uses the first entry of BUCKET_COUNT 
    as its bucket count. */
-SymTable_T SymTable_new()
+SymTable_T SymTable_new(void)
 {
  struct SymTable *pSymtable; /* So can I replace this with SymTable_T p;? or is it SymTable_T *p;? */
  struct Binding **qBinding;

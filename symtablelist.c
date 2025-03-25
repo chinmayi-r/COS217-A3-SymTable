@@ -43,7 +43,7 @@ static void SymTable_node_free(Node_T *pBinding){ /* function name Node_free doe
 /* Create a new symbol table and return a pointer to it. 
    The table is initially empty and uses the first entry of BUCKET_COUNT 
    as its bucket count. */
-SymTable_T SymTable_new()
+SymTable_T SymTable_new(void)
 {
  struct SymTable *pSymtable; /* So can I replace this with SymTable_T p;? or is it SymTable_T *p;? */
  pSymtable = calloc(1, sizeof(*pSymtable));
