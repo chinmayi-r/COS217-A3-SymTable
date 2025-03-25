@@ -90,9 +90,8 @@ static void SymTable_resize(SymTable_T oSymTable, size_t size)
 
     size_t old_size = oSymTable->size;
     old_buckets = oSymTable->buckets;
-    /*assert(0);*/
-    new_buckets = calloc(size, sizeof(*new_buckets));
-    if(new_buckets == NULL) {printf("Mem alloc Error"); assert(0); return;}
+    new_buckets = (struct Binding **) calloc(size, sizeof(*new_buckets));
+    if(new_buckets == NULL) {printf("Mem alloc Error"); return;}
 
     oSymTable->buckets = new_buckets;
     oSymTable->size = size;
@@ -132,25 +131,19 @@ int SymTable_put(SymTable_T oSymTable, const char *pcKey, const void *pvValue)
     /*assert(pvValue != NULL);*/
 
     if(SymTable_contains(oSymTable, pcKey)){return 0;}
-    /*printf("xxx");
-    printf("%d", (oSymTable->len));
-    printf("yyy");
-    printf("%d", (oSymTable->size));
-    printf("zzz");
-    printf("%d", ((oSymTable->len >= oSymTable->size))); */
+    assert(0);
+
     /* NOTE that >= does not mean no of elements >= BUCKETCOUNT!!! 
     Since ++(oSymTable->len); is happening later, the no of elements is actually (oSymTable->len+1) !*/
     if ((oSymTable->len >= oSymTable->size) && oSymTable->size != BUCKET_COUNT[7])
     {
-        printf("from");
-        printf("%d", oSymTable->size);
-        printf("to");
-        printf("%d", BUCKET_COUNT[findIndex(BUCKET_COUNT, 8, oSymTable->size)+1]);
         SymTable_resize(oSymTable, BUCKET_COUNT[findIndex(BUCKET_COUNT, 8, oSymTable->size)+1]);
-        /*assert(0);*/
-        
+        assert(0);
+        printf("resized to");
+        printf((char *)oSymTable->size);
     }
-    fflush(stdout);
+    assert(0);
+    printf("asa");
     hash_value = SymTable_hash(pcKey, oSymTable->size);
     newBinding = (Binding_T *) calloc(1, sizeof(Binding_T));
     if(newBinding == NULL) {printf("Mem alloc Error"); return 0;}
