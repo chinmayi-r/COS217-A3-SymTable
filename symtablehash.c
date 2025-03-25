@@ -143,7 +143,6 @@ int SymTable_put(SymTable_T oSymTable, const char *pcKey, const void *pvValue)
         printf((char *)oSymTable->size);
     }
     
-    printf("asa");
     hash_value = SymTable_hash(pcKey, oSymTable->size);
     newBinding = (Binding_T *) calloc(1, sizeof(Binding_T));
     if(newBinding == NULL) {printf("Mem alloc Error"); return 0;}
