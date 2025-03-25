@@ -39,10 +39,14 @@ static void Binding_free(Binding *p){
 SymTable_T SymTable_new()
 {
  struct SymTable *p; /* So can I replace this with SymTable_T p;? or is it SymTable_T *p;? */
+ struct Binding **q;
  p = calloc(1, sizeof(*p));
  if(p == NULL) {printf("Mem alloc Error"); return NULL;}
  p->size = BUCKET_COUNT;
  p->len = 0;
+ q = (Binding **) calloc(BUCKET_COUNT, sizeof(Binding *));
+ if(q == NULL) {printf("Mem alloc Error"); return NULL;}
+ p->buckets = q;
  return p;
 }
 
