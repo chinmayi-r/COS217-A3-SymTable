@@ -77,7 +77,7 @@ static void SymTable_resize(SymTable_T oSymTable, size_t size)
 
     size_t old_size = oSymTable->size;
     old_buckets = oSymTable->buckets;
-    new_buckets = (Binding_T **) (size, sizeof(*new_buckets));
+    new_buckets = (Binding_T **) calloc(size, sizeof(*new_buckets));
     if(new_buckets == NULL) {printf("Mem alloc Error"); return;}
 
     oSymTable->buckets = new_buckets;
