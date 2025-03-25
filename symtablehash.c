@@ -141,6 +141,7 @@ int SymTable_put(SymTable_T oSymTable, const char *pcKey, const void *pvValue)
         printf("resized to");
         printf((char *)oSymTable->size);
     }
+    assert(0);
     printf("asa");
     hash_value = SymTable_hash(pcKey, oSymTable->size);
     newBinding = (Binding_T *) calloc(1, sizeof(Binding_T));
