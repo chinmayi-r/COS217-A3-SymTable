@@ -155,7 +155,7 @@ int SymTable_put(SymTable_T oSymTable, const char *pcKey, const void *pvValue)
     Since ++(oSymTable->len); is happening later, the no of elements is actually (oSymTable->len+1) !*/
     if ((oSymTable->len >= oSymTable->size) && oSymTable->size != BUCKET_COUNT[7])
     {
-        SymTable_resize(oSymTable, BUCKET_COUNT[BUCKET_LIST_findIndex(BUCKET_COUNT, 8, oSymTable->size)+1]);
+        SymTable_resize(oSymTable, BUCKET_COUNT[BUCKETLIST_findIndex(BUCKET_COUNT, 8, oSymTable->size)+1]);
     }
     
     hash_value = SymTable_hash(pcKey, oSymTable->size);
